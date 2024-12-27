@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PDF a Excel{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlazar el archivo CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">PDF a Excel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/consolidado">Consolidado</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/documentacion">Documentación</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacto">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal (esto se sustituirá en cada página) -->
+    <div class="container mt-5">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        <p class="mb-0">© 2024 PDF a Excel | Todos los derechos reservados</p>
+    </footer>
+
+    <!-- Modal de error -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-4 shadow-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">¡Algo salió mal!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Mostrar el Modal si hay un error -->
+    {% if error_message %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer el mensaje de error en el modal
+            document.getElementById('errorMessage').innerText = "{{ error_message }}";
+            // Crear y mostrar el modal
+            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+        });
+    </script>
+    {% endif %}
+
+</body>
+</html>
