@@ -3,9 +3,6 @@ import os
 import pandas as pd
 from werkzeug.utils import secure_filename
 from utils import extract_data_from_pdf, get_next_month_year, determine_zone
-from babel import Locale
-from babel.dates import format_datetime
-from datetime import datetime
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '/path/to/upload/folder'
@@ -13,13 +10,6 @@ app.config['ALLOWED_EXTENSIONS'] = {'pdf'}
 app.config['PROCESSED_FOLDER'] = 'processed'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
-
-# Configurar la localización para Ecuador
-locale = Locale('es', 'EC')
-
-# Obtener la fecha actual y formatearla
-fecha = datetime.now()
-fecha_formateada = format_datetime(fecha, locale=locale)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']

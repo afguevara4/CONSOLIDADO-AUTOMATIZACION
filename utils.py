@@ -70,8 +70,7 @@ def get_zonal_number(zona):
     }
     return zonal_map.get(zona)
 
-# Configurar el idioma en español
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+locale.setlocale(locale.LC_TIME, 'es_US.UTF-8')  # Inglés (Estados Unidos) como alternativa.
 
 # Función para calcular el mes y año siguiente
 def get_next_month_year():
