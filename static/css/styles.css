@@ -1,0 +1,47 @@
+/* Estilos personalizados para el modal */
+#errorModal .modal-content {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 10px;
+    border: 1px solid #f5c6cb;
+}
+
+#errorModal .modal-header {
+    border-bottom: 1px solid #f5c6cb;
+    background-color: #f5c6cb;
+}
+
+#errorModal .modal-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#errorModal .modal-body {
+    font-size: 1rem;
+    padding: 20px;
+    text-align: center;
+}
+
+#errorModal .modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+#errorModal .btn-close {
+    background-color: transparent;
+    border: none;
+    font-size: 1.25rem;
+}
+
+#errorModal .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#errorModal .btn-danger:hover {
+    background-color: #c82333;
+}

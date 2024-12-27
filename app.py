@@ -1,175 +1,54 @@
 from flask import Flask, request, render_template, send_file
 import os
 import pandas as pd
-import pdfplumber
-import re
 from werkzeug.utils import secure_filename
-import re
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-import locale
+from utils import extract_data_from_pdf, get_next_month_year, determine_zone
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['UPLOAD_FOLDER'] = '/path/to/upload/folder'
+app.config['ALLOWED_EXTENSIONS'] = {'pdf'}  
 app.config['PROCESSED_FOLDER'] = 'processed'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
 
-def extract_data_from_pdf(pdf_path):
-    memorandos = []  # Tabla 1
-    activos_por_zona = {f"Zona{i}": [] for i in range(1, 10)}  # Diccionario para activos por zona
-    memorandos_vistos = set()  # Conjunto para evitar memorandos repetidos
-    zona_limits = {
-        "Zona1": 5,  # Por ejemplo, 5 datos para Zona1
-        "Zona2": 3,
-        "Zona3": 4,
-        "Zona4": 5,
-        "Zona5": 8,  # 8 datos para Zona5
-        "Zona6": 4,
-        "Zona7": 5,
-        "Zona8": 3,  # 3 datos para Zona8
-        "Zona9": 3
-    }
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-    with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
-            text = page.extract_text()
-            memorando, fecha_envio = extract_memorando(text)  # Extraer número de memorando y la fecha de envío
-
-            if memorando in memorandos_vistos:
-                continue  # Ignorar memorandos ya procesados
-
-            zona = determine_zone(memorando)  # Determinar la zona con base en el memorando
-            print(f"Memorando: {memorando}, Zona: {zona}")  # Depuración para verificar la zona asignada
-            tables = page.extract_tables()
-
-            for table in tables:
-                for row in table:
-                    # Ignorar filas con la palabra 'TOTAL' y asegurar que la fila tenga al menos dos columnas
-                    if len(row) >= 2 and row[1] and row[1].strip():
-                        # Verificar si la fila es la de 'TOTAL'
-                        if row[0] == 'TOTAL':
-                            continue  # Omite la fila que contiene 'TOTAL'
-
-                        # Limpiar el valor numérico eliminando los puntos
-                        cleaned_value = re.sub(r'\.', '', row[1].strip())  # Eliminar puntos
-
-                        # Verificar si el valor es un número antes de convertirlo
-                        if cleaned_value.isdigit():
-                            activos = int(cleaned_value)
-                            if zona:
-                                # Verificar si se ha superado el límite de datos para esta zona
-                                if len(activos_por_zona[zona]) < zona_limits[zona]:
-                                    print(f"Zona {zona}: Activo: {activos}")  # Imprime los valores de otras zonas
-                                    activos_por_zona[zona].append(activos)
-                                else:
-                                    print(f"Zona {zona} ha alcanzado el límite de {zona_limits[zona]} datos. Ignorando el dato: {activos}")
-
-            # Registrar memorando en la tabla 1
-            if memorando:
-
-                # Añadir la fecha de envío al memorando y la coordinación zonal
-                zona = determine_zone(memorando)
-                coordinacion_zonal = None
-
-                # Asignar el número correspondiente a la coordinación zonal
-                if zona == "Zona1":
-                    coordinacion_zonal = 1
-                elif zona == "Zona2":
-                    coordinacion_zonal = 2
-                elif zona == "Zona3":
-                    coordinacion_zonal = 3
-                elif zona == "Zona4":
-                    coordinacion_zonal = 4
-                elif zona == "Zona5":
-                    coordinacion_zonal = 5
-                elif zona == "Zona6":
-                    coordinacion_zonal = 6
-                elif zona == "Zona7":
-                    coordinacion_zonal = 7
-                elif zona == "Zona8":
-                    coordinacion_zonal = 8
-                elif zona == "Zona9":
-                    coordinacion_zonal = 9
-
-                # Añadir la fecha de envío al memorando
-                memorandos.append({
-                    "COORDINACIÓN ZONAL": coordinacion_zonal,
-                    "NRO. MEMORANDO": memorando, 
-                    "FECHA ENVÍO MEMORANDO": fecha_envio
-                })
-                memorandos_vistos.add(memorando)  # Marcar el memorando como procesado
-
-    return memorandos, activos_por_zona
-
-# Función para determinar la zona según el memorando (sin cambios)
-def determine_zone(memorando):
-    zonas_map = {
-        "CZ-1": "Zona1", "CZ-2": "Zona2", "CZ-3": "Zona3",
-        "CZ-4": "Zona4", "CZ-5": "Zona5", "CZ-6": "Zona6",
-        "CZ-7": "Zona7", "CZ-8": "Zona8", "DCDMQ": "Zona9"  # Asegúrate que DCDMQ esté correctamente mapeado
-    }
-    for key, zona in zonas_map.items():
-        if key in memorando:
-            return zona
-    return None
-
-# Configurar el idioma en español
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-
-# Función para calcular el mes y año siguiente en español
-def get_next_month_year():
-    current_date = datetime.now()
-    next_month = current_date + relativedelta(months=1)
-    month_name = next_month.strftime('%B').upper()  # Obtener el nombre del mes en español
-    year = next_month.year
-    return month_name, year
-
-def extract_memorando(text):
-    # Buscar el número del memorando
-    match = re.search(r"Memorando Nro\. MIES-[^\s]+", text)  # Regex para encabezados de memorandos
-    fecha_envio = None
-
-    if match:
-        memorando = match.group(0)
-
-        # Verificar si el memorando contiene "DCDMQ"
-        if "MIES-SATP-DCDMQ" in memorando:
-            # Ajustar el patrón para encontrar la fecha en el formato "13 de diciembre"
-            fecha_match = re.search(r"(\d{1,2}\s+de\s+[a-záéíóúñ]+)", text, re.IGNORECASE)
-        else:
-            # Para el resto de zonas, el formato de la fecha sigue siendo estándar
-            fecha_match = re.search(r"(\d{1,2}\s+de\s+[a-záéíóúñ]+)", text, re.IGNORECASE)
-
-        if fecha_match:
-            # Extraer solo el día y el mes
-            fecha_envio = fecha_match.group(1).strip().upper()  # Convertir a mayúsculas
-        else:
-            fecha_envio = "FECHA NO ENCONTRADA"  # Valor por defecto si no se encuentra la fecha
-
-        return memorando, fecha_envio
-    return None, None
-
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
-    print("Request method:", request.method)
-      
+    return render_template("index.html")
+
+@app.route("/consolidado", methods=["GET", "POST"])
+def consolidado():      
     if request.method == "POST":
-        print("Processing uploaded files...")
         files = request.files.getlist("pdf_files")
         all_memorandos = []  # Tabla 1
         activos_por_zona_global = {f"Zona{i}": [] for i in range(1, 10)}  # Tabla 2
 
         for file in files:
             filename = secure_filename(file.filename)
+            if not filename.lower().endswith('.pdf'):
+                return render_template("consolidado.html", error_message="Solo se permiten archivos PDF.")
+            
             pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(pdf_path)
-            memorandos, activos_por_zona = extract_data_from_pdf(pdf_path)
-            all_memorandos.extend(memorandos)
 
-            # Consolidar activos por zona
-            for zona, activos in activos_por_zona.items():
-                activos_por_zona_global[zona].extend(activos)
+            # Validar si el archivo PDF se puede procesar
+            try:
+                # Extrae datos del PDF
+                memorandos, activos_por_zona = extract_data_from_pdf(pdf_path)
+                if memorandos is None or activos_por_zona is None:
+                    return render_template("consolidado.html", error_message="El archivo PDF no tiene el formato correcto.")
+            
+                all_memorandos.extend(memorandos)
+
+                # Consolidar activos por zona
+                for zona, activos in activos_por_zona.items():
+                    activos_por_zona_global[zona].extend(activos)
+
+            except Exception as e:
+                # Captura cualquier error que pueda ocurrir durante el procesamiento
+                return render_template("consolidado.html", error_message="Ocurrió un error al procesar el archivo PDF: " + str(e))
 
         # Calcular totales por zona
         zona_totals = {zona: sum(activos) for zona, activos in activos_por_zona_global.items()}
@@ -192,7 +71,7 @@ def index():
                 df_memorandos = pd.DataFrame(all_memorandos)
                 df_memorandos.to_excel(writer, sheet_name="Resumen", index=False, startrow=1)
 
-                print(df_memorandos)
+                #print(df_memorandos)
 
                 # Obtener el total general para la nueva columna
                 total_usuarios_aprobados = df_memorandos["TOTAL USUARIOS APROBADOS POR UNIDAD DESCONCENTRADA"].sum()
@@ -284,7 +163,15 @@ def index():
 
             return send_file(excel_path, as_attachment=True)
 
-    return render_template("index.html")
+    return render_template("consolidado.html")
+
+@app.route("/documentacion")
+def documentacion():
+    return render_template("documentacion.html")
+
+@app.route("/contacto")
+def contacto():
+    return render_template("contacto.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
