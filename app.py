@@ -67,8 +67,37 @@ def extract_data_from_pdf(pdf_path):
 
             # Registrar memorando en la tabla 1
             if memorando:
+
+                # Añadir la fecha de envío al memorando y la coordinación zonal
+                zona = determine_zone(memorando)
+                coordinacion_zonal = None
+
+                # Asignar el número correspondiente a la coordinación zonal
+                if zona == "Zona1":
+                    coordinacion_zonal = 1
+                elif zona == "Zona2":
+                    coordinacion_zonal = 2
+                elif zona == "Zona3":
+                    coordinacion_zonal = 3
+                elif zona == "Zona4":
+                    coordinacion_zonal = 4
+                elif zona == "Zona5":
+                    coordinacion_zonal = 5
+                elif zona == "Zona6":
+                    coordinacion_zonal = 6
+                elif zona == "Zona7":
+                    coordinacion_zonal = 7
+                elif zona == "Zona8":
+                    coordinacion_zonal = 8
+                elif zona == "Zona9":
+                    coordinacion_zonal = 9
+
                 # Añadir la fecha de envío al memorando
-                memorandos.append({"NRO. MEMORANDO": memorando, "FECHA ENVÍO MEMORANDO": fecha_envio})
+                memorandos.append({
+                    "COORDINACIÓN ZONAL": coordinacion_zonal,
+                    "NRO. MEMORANDO": memorando, 
+                    "FECHA ENVÍO MEMORANDO": fecha_envio
+                })
                 memorandos_vistos.add(memorando)  # Marcar el memorando como procesado
 
     return memorandos, activos_por_zona
@@ -123,7 +152,10 @@ def extract_memorando(text):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    print("Request method:", request.method)
+      
     if request.method == "POST":
+        print("Processing uploaded files...")
         files = request.files.getlist("pdf_files")
         all_memorandos = []  # Tabla 1
         activos_por_zona_global = {f"Zona{i}": [] for i in range(1, 10)}  # Tabla 2
@@ -162,8 +194,22 @@ def index():
 
                 print(df_memorandos)
 
+                # Obtener el total general para la nueva columna
+                total_usuarios_aprobados = df_memorandos["TOTAL USUARIOS APROBADOS POR UNIDAD DESCONCENTRADA"].sum()
+
+                # Añadir la fila TOTAL al DataFrame
+                total_row = {
+                    "COORDINACIÓN ZONAL": "TOTAL",  # Texto para la primera columna
+                    "NRO. MEMORANDO": "",
+                    "FECHA ENVÍO MEMORANDO": "",
+                    "TOTAL USUARIOS APROBADOS POR UNIDAD DESCONCENTRADA": total_usuarios_aprobados
+                }
+                df_memorandos = pd.concat([df_memorandos, pd.DataFrame([total_row])], ignore_index=True)
+
+                df_memorandos.to_excel(writer, sheet_name="Resumen", index=False, startrow=1) 
+
                 # Obtener el número de filas y columnas de df_memorandos
-                num_rows_memorandos = len(df_memorandos)
+                num_rows_memorandos = len(df_memorandos) + 1
                 num_cols_memorandos = len(df_memorandos.columns)
 
                 # Aplicar formato de tabla en "Resumen" para la Tabla 1
@@ -185,7 +231,7 @@ def index():
                 df_activos = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in activos_por_zona_global.items()]))
 
                 # Completar valores faltantes en las celdas vacías para evitar problemas al sumar
-                df_activos = df_activos.fillna(0)
+                #df_activos = df_activos.fillna(0)
 
                 # Calcular la fila de totales por zona
                 totals_row = df_activos.sum(axis=0, skipna=True)
