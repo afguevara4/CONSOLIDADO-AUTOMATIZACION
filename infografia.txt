@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Diciembre 2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #004085;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .section h2 {
+            color: #004085;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        .stats div {
+            text-align: center;
+            padding: 10px;
+        }
+        .highlight {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .chart {
+            width: 300px;
+            height: 150px;
+            background: linear-gradient(to top, #ffcccb, #f5f5f5);
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        .chart .bar {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            background-color: #004085;
+        }
+        .chart .bar:nth-child(1) {
+            height: 84%;
+            left: 10%;
+        }
+        .chart .bar:nth-child(2) {
+            height: 15%;
+            left: 40%;
+        }
+        .chart .bar:nth-child(3) {
+            height: 1%;
+            left: 70%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Infografía Diciembre 2024</h1>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>Resumen General</h2>
+            <div class="stats">
+                <div class="highlight">
+                    <p><strong>Total Usuarios</strong></p>
+                    <p>45,485</p>
+                </div>
+                <div>
+                    <p><strong>Monto Enviado a Pago</strong></p>
+                    <p>$10'922,912</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Usuarios por Tipo</h2>
+            <div class="chart-container">
+                <div class="chart">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                        <th>Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Discapacidad</td>
+                        <td>38,241</td>
+                        <td>84.1%</td>
+                    </tr>
+                    <tr>
+                        <td>Catastrófica</td>
+                        <td>6,918</td>
+                        <td>15.2%</td>
+                    </tr>
+                    <tr>
+                        <td>VIH</td>
+                        <td>326</td>
+                        <td>0.7%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Estadísticas por Zona</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Zona</th>
+                        <th>Nro. Comités</th>
+                        <th>Nro. Integrantes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ZONA 1</td>
+                        <td>111</td>
+                        <td>3,938</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 2</td>
+                        <td>52</td>
+                        <td>1,627</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 3</td>
+                        <td>110</td>
+                        <td>3,524</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 4</td>
+                        <td>242</td>
+                        <td>7,700</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 5</td>
+                        <td>288</td>
+                        <td>10,090</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 6</td>
+                        <td>82</td>
+                        <td>2,761</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 7</td>
+                        <td>167</td>
+                        <td>5,316</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 8</td>
+                        <td>150</td>
+                        <td>5,578</td>
+                    </tr>
+                    <tr>
+                        <td>ZONA 9</td>
+                        <td>100</td>
+                        <td>3,565</td>
+                    </tr>
+                    <tr>
+                        <th>TOTAL</th>
+                        <th>1,302</th>
+                        <th>44,099</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Casos Atendidos por Mes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Casos Atendidos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Enero</td><td>252</td></tr>
+                    <tr><td>Febrero</td><td>170</td></tr>
+                    <tr><td>Marzo</td><td>233</td></tr>
+                    <tr><td>Abril</td><td>460</td></tr>
+                    <tr><td>Mayo</td><td>184</td></tr>
+                    <tr><td>Junio</td><td>314</td></tr>
+                    <tr><td>Julio</td><td>349</td></tr>
+                    <tr><td>Agosto</td><td>279</td></tr>
+                    <tr><td>Septiembre</td><td>201</td></tr>
+                    <tr><td>Octubre</td><td>147</td></tr>
+                    <tr><td>Noviembre</td><td>193</td></tr>
+                    <tr>
+                        <th>TOTAL</th>
+                        <th>2,782</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
