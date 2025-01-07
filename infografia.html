@@ -11,12 +11,6 @@
             margin: 0;
             padding: 0;
         }
-        header {
-            background: rgba(0, 64, 133, 0.22); /* Color #004085 con 22% de transparencia */
-            color: #08377c;
-            padding: 10px 15px;
-            text-align: center;
-        }
         section {
             padding: 15px;
             margin: 10px;
@@ -67,210 +61,278 @@
         .person-icon:hover {
             transform: scale(1.1);
         }
-
-        .titulo-principal {
-            font-size: 60px; /* Solo afecta al h1 con la clase "titulo-principal" */
-        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="static/css/styles.css">
 
 </head>
 <body>
     <header>
         <h1 id="titulo-principal">Infografía DPCPD</h1>
-        <H2>Enero 2025</H2>
-    </header>
+        <h2 id="Fecha-Info">Enero 2025</h2>
+    </header>    
 
-    <SEction>
-        <h1>Bono Juaquin Gallegos Lara</h1>
-    </SEction>
+    <Section>
+        <h1 id="subtitulos">Bono Juaquin Gallegos Lara</h1>
+    </Section>
+
+    <section class="contenedor">
+        <!-- Párrafo 1 con imagen -->
+        <div class="parrafo-izquierda">
+            <img src="static/images/monto.png" alt="Imagen Párrafo 1">
+            <h2 class="subtitulo-parrafos" >$2'00000</h2>
+            <h3 class="titulo-parrafos" >Monto enviado a Pagar</h3>
+            <p class="parrafos-bjgl" >El monto total enviado al pago correspondiente al número de usuarios que cumplen con criterios para pago del mes de Enero.</p>
+        </div>
+    
+        <!-- Párrafo 2 con imagen -->
+        <div class="parrafo-derecha">
+            <img src="static/images/total.png" alt="Imagen Párrafo 2">
+            <h2 class="subtitulo-parrafos" >45.485</h2>
+            <h3 class="titulo-parrafos" >Total usuarios</h3>
+            <p class="parrafos-bjgl">Es el número total de usuarios en nómina del BJGL correspondiente a Enero 2025.</p>
+        </div>
+    </section>
+    
     <section>
-        <h2>$ 2'00000</h2>
-        <h3>Monto enviado a Pagar</h3>
-        <h4>El monto total enviado al pago correspondiente al número de usuarios que cumplen con criterios para pago del mes de Enero</h4>
-        <h2>45.485</h2>
-        <h3>Total usuarios</h3>
-        <h4>Es el número total de usuarios en nómina del BJGL correspondiente a Enero 2025.</h4>
-        <p><strong>Total de Usuarios</strong> 45,485</p>
-        <p><strong>Monto enviado a pago:</strong> $10'922,912</p>
+        <h1 id="subtitulos">Usuarios por tipo de discapacidad</h1>
     </section>
 
-    <section>
-        <h2>Usuarios por tipo de discapacidad</h2>
-        <ul>
-            <li>Catastrófica</li>
-            <li>6.918c</li>
-            <li>Discapacidad</li>
-            <li>38.241c</li>
-            <li>VIH</li>
-            <li>326c</li>
-            <li>Total usuarios</li>
-            <li>45.485c</li>
-        </ul>
-
-        <h2>Comparación de Ventas Mensuales</h2>
-        <canvas id="miGraficoMultiple"></canvas>
-
-        <script>
-            // Selección del canvas
-            var ctx = document.getElementById('miGraficoMultiple').getContext('2d');
-            
-            // Crear el gráfico con múltiples datasets
-            var miGraficoMultiple = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Z1', 'Z2', 'Z3', 'Z4', 'Z5', 'Z6', 'Z7', 'Z8', 'Z9'],
-                    datasets: [
-                        {
-                            label: 'CATAS',
-                            data: [511,152,340,1125,1914,202,627,1500,547],
-                            backgroundColor: '#617c08',  // Verde con transparencia al 70%
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'DISCA',
-                            data: [3800,1364,3275,7227,7640,2568,4875,4283,3709],
-                            backgroundColor: '#08377c',  // Azul oscuro sólido 
-                            borderColor: '#08377c', 
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'VHI',
-                            data: [35,12,11,40,121,4,19,72,12],
-                            backgroundColor: '#c099ff',  // Verde con transparencia al 70%
-                            borderColor: '#c099ff',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        </script>
-        
-        <h1>Gráfico con Íconos de Personas</h1>
-
-        <!-- Fila 1 -->
-        <div class="row-container">
-            <p class="row-title">Catastrófica</p>
-            <div class="image-container" id="row1"></div>
+    <section class="contenedor" >
+        <div class="parrafo-izquierda">
+            <ul>
+                <li>Catastrófica</li>
+                <li>6.918c</li>
+                <li>Discapacidad</li>
+                <li>38.241c</li>
+                <li>VIH</li>
+                <li>326c</li>
+                <li>Total usuarios</li>
+                <li>45.485c</li>
+            </ul>
         </div>
 
-        <!-- Fila 2 -->
-        <div class="row-container">
-            <p class="row-title">Discapacidad</p>
-            <div class="image-container" id="row2"></div>
-        </div>
+        <div class="parrafo-derecha">
+            <!--<h2>Comparación de Ventas Mensuales</h2> -->
+            <canvas id="miGraficoMultiple"></canvas>
 
-        <!-- Fila 3 -->
-        <div class="row-container">
-            <p class="row-title">VIH</p>
-            <div class="image-container" id="row3"></div>
-        </div>
-
-        <script>
-            // Crear 10 iconos de personas usando Font Awesome por cada fila
-            function createRowIcons(rowId, color1, color2, color3) {
-                const imageContainer = document.getElementById(rowId);
+            <script>
+                // Selección del canvas
+                var ctx = document.getElementById('miGraficoMultiple').getContext('2d');
                 
-                for (let i = 0; i < 10; i++) {
-                    const icon = document.createElement('i');
-                    icon.classList.add('fas', 'fa-user-alt', 'person-icon');
-                    
-                    // Fila 1: Primeros 2 iconos color1, otros 8 color2
-                    if (rowId === 'row1') {
-                        if (i < 2) {
-                            icon.style.color = color1; // Primeros 2 iconos con color1
-                        } else {
-                            icon.style.color = color2; // Resto de los iconos con color2
+                // Crear el gráfico con múltiples datasets
+                var miGraficoMultiple = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Z1', 'Z2', 'Z3', 'Z4', 'Z5', 'Z6', 'Z7', 'Z8', 'Z9'],
+                        datasets: [
+                            {
+                                label: 'CATAS',
+                                data: [511,152,340,1125,1914,202,627,1500,547],
+                                backgroundColor: '#617c08',  // Verde con transparencia al 70%
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'DISCA',
+                                data: [3800,1364,3275,7227,7640,2568,4875,4283,3709],
+                                backgroundColor: '#08377c',  // Azul oscuro sólido 
+                                borderColor: '#08377c', 
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'VHI',
+                                data: [35,12,11,40,121,4,19,72,12],
+                                backgroundColor: '#c099ff',  // Verde con transparencia al 70%
+                                borderColor: '#c099ff',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-    
-                    // Fila 2: Primeros 8 iconos color1, los 2 restantes color2
-                    else if (rowId === 'row2') {
-                        if (i < 8) {
-                            icon.style.color = color1; // Primeros 8 iconos con color1
-                        } else {
-                            icon.style.color = color2; // Últimos 2 iconos con color2
-                        }
-                    }
-    
-                    // Fila 3: Primer icono color1, los 9 restantes color2
-                    else if (rowId === 'row3') {
-                        if (i === 0) {
-                            icon.style.color = color1; // Primer icono con color1
-                        } else {
-                            icon.style.color = color2; // Resto de los iconos con color2
-                        }
-                    }
-                    
-                    imageContainer.appendChild(icon);
-                }
-            }
-    
-            // Llamar a la función para cada fila, pasando los colores
-            createRowIcons('row1', '#617c08', '#dbe4c0');  // Fila 1
-            createRowIcons('row2', '#08377c', '#7da4dd');  // Fila 2
-            createRowIcons('row3', '#c099ff', '#c4bcd1');  // Fila 3
-    
-        </script>
-
-        <h2>% Tipo de discapacidad</h2>
-        <canvas id="graficoAnillo"></canvas>
-
-        <script>
-            var ctx = document.getElementById('graficoAnillo').getContext('2d');
-
-            var graficoAnillo = new Chart(ctx, {
-                type: 'doughnut',  // Tipo de gráfico anillo
-                data: {
-                    labels: ['Catastrófica', 'Discapacidad', 'VIH'],
-                    datasets: [{
-                        label: 'Datos Financieros',
-                        data: [6918,38241,326],
-                        backgroundColor: [
-                            '#617c08',    // Azul oscuro
-                            '#08377c',  // Rojo
-                            '#c099ff'   // Azul claro
-                        ],
-                        borderColor: [
-                            '#617c08',
-                            '#08377c',
-                            '#c099ff'
-                        ],
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top' // Leyenda en la parte superior
-                        }
-                    }
-                }
-            });
-        </script>
-
+                });
+            </script>
+        </div>
         
+        <div>
+            <!-- <h1>Gráfico con Íconos de Personas</h1>-->
+
+            <!-- Fila 1 -->
+            <div class="row-container">
+                <p class="row-title">Catastrófica</p>
+                <div class="image-container" id="row1"></div>
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="row-container">
+                <p class="row-title">Discapacidad</p>
+                <div class="image-container" id="row2"></div>
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="row-container">
+                <p class="row-title">VIH</p>
+                <div class="image-container" id="row3"></div>
+            </div>
+
+            <script>
+                // Crear 10 iconos de personas usando Font Awesome por cada fila
+                function createRowIcons(rowId, color1, color2, color3) {
+                    const imageContainer = document.getElementById(rowId);
+                    
+                    for (let i = 0; i < 10; i++) {
+                        const icon = document.createElement('i');
+                        icon.classList.add('fas', 'fa-user-alt', 'person-icon');
+                        
+                        // Fila 1: Primeros 2 iconos color1, otros 8 color2
+                        if (rowId === 'row1') {
+                            if (i < 2) {
+                                icon.style.color = color1; // Primeros 2 iconos con color1
+                            } else {
+                                icon.style.color = color2; // Resto de los iconos con color2
+                            }
+                        }
+        
+                        // Fila 2: Primeros 8 iconos color1, los 2 restantes color2
+                        else if (rowId === 'row2') {
+                            if (i < 8) {
+                                icon.style.color = color1; // Primeros 8 iconos con color1
+                            } else {
+                                icon.style.color = color2; // Últimos 2 iconos con color2
+                            }
+                        }
+        
+                        // Fila 3: Primer icono color1, los 9 restantes color2
+                        else if (rowId === 'row3') {
+                            if (i === 0) {
+                                icon.style.color = color1; // Primer icono con color1
+                            } else {
+                                icon.style.color = color2; // Resto de los iconos con color2
+                            }
+                        }
+                        
+                        imageContainer.appendChild(icon);
+                    }
+                }
+        
+                // Llamar a la función para cada fila, pasando los colores
+                createRowIcons('row1', '#617c08', '#dbe4c0');  // Fila 1
+                createRowIcons('row2', '#08377c', '#7da4dd');  // Fila 2
+                createRowIcons('row3', '#c099ff', '#c4bcd1');  // Fila 3
+        
+            </script>
+        </div>
+        
+        <div>
+            <h2>% Tipo de discapacidad</h2>
+            <canvas id="graficoAnillo"></canvas>
+
+            <script>
+                var ctx = document.getElementById('graficoAnillo').getContext('2d');
+
+                var graficoAnillo = new Chart(ctx, {
+                    type: 'doughnut',  // Tipo de gráfico anillo
+                    data: {
+                        labels: ['Catastrófica', 'Discapacidad', 'VIH'],
+                        datasets: [{
+                            label: 'Datos Financieros',
+                            data: [6918,38241,326],
+                            backgroundColor: [
+                                '#617c08',    // Azul oscuro
+                                '#08377c',  // Rojo
+                                '#c099ff'   // Azul claro
+                            ],
+                            borderColor: [
+                                '#617c08',
+                                '#08377c',
+                                '#c099ff'
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top' // Leyenda en la parte superior
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>           
+              
     </section>
 
     <section>
-        <h2>Estadísticas por Zona</h2>
+        <h2 id="subtitulos">Informe de Bloqueos, Inclusiones y Fallecidos          -          Registro Social</h2>
+    </section>
+
+    <section class="contenedor">
+        <!-- Párrafo 1 con imagen -->
+        <div class="parrafo-izquierda">
+            <h3 class="titulo-parrafos" >Estadísticas de Impacto</h3>
+            <p class="parrafos-bjgl" >Corresponde a la información recopilada en el monitoreo de Incidentes, 
+                referida a bloqueos, fallecimientos e inclusiones ocurridos.</p>
+            <h4 class="titulo-parrafos" >Periodo Enero 2025</h4>
+            <ul>
+                <li>Inclusiones</li>
+                <li>6.918c</li>
+                <li>Bloqueos</li>
+                <li>38.241c</li>
+                <li>Suspensiones</li>
+                <li>326c</li>
+                <li>Fallecidos</li>
+                <li>45.485c</li>
+            </ul>
+        </div>
+    
+        <!-- Párrafo 2 con imagen -->
+        <div class="parrafo-derecha">
+            <h3 class="titulo-parrafos" >Registro Social</h3>
+            <p class="parrafos-bjgl" >El cuadro corresponde a la información levantada por la Unidad de Registro Social y 
+                que corresponde a usuarios del Bono Joaquín Gallegos Lara, nominal Enero 2025.</p>
+            <ul>
+                <li>Inclusiones</li>
+                <li>6.918c</li>
+                <li>Bloqueos</li>
+                <li>38.241c</li>
+                <li>Suspensiones</li>
+                <li>326c</li>
+                <li>Fallecidos</li>
+                <li>45.485c</li>
+            </ul>
+            <div class="contenedor-imagen-texto">
+                <img src="static/images/total.png" alt="Imagen Párrafo 2">
+                <div>
+                    <h2 class="subtitulo-parrafos">Total general</h2>
+                    <h3 class="subtitulo-parrafos">45.485c</h3>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <section>
+        <h2 id="subtitulos">Comités de personas responsables del cuidado BJGL</h2>
+    </section>
+
+    <section>
         <table>
             <thead>
                 <tr>
-                    <th>Zona</th>
+                    <th>COORDINACIÓN ZONAL /
+                        UNIDAD DESCONCENTRADA                        
+                        DISTRITAL</th>
                     <th>Nro. Comités</th>
                     <th>Nro. Integrantes</th>
                 </tr>
@@ -331,33 +393,330 @@
     </section>
 
     <section>
-        <h2>Casos Atendidos por Mes</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Mes</th>
-                    <th>Casos Atendidos</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Enero</td><td>252</td></tr>
-                <tr><td>Febrero</td><td>170</td></tr>
-                <tr><td>Marzo</td><td>233</td></tr>
-                <tr><td>Abril</td><td>460</td></tr>
-                <tr><td>Mayo</td><td>184</td></tr>
-                <tr><td>Junio</td><td>314</td></tr>
-                <tr><td>Julio</td><td>349</td></tr>
-                <tr><td>Agosto</td><td>279</td></tr>
-                <tr><td>Septiembre</td><td>201</td></tr>
-                <tr><td>Octubre</td><td>147</td></tr>
-                <tr><td>Noviembre</td><td>193</td></tr>
-                <tr>
-                    <th>TOTAL</th>
-                    <th>2,782</th>
-                </tr>
-            </tbody>
-        </table>
+        <h2 id="subtitulos">CAMBIAR</h2>
     </section>
 
+    <section>
+        <h2>Dirección de Protección al Cuidado de Personas con Discapacidad</h2>
+    </section>
+
+    <section>
+        <h2 id="subtitulos">CAMBIAR</h2>
+    </section>
+
+    <header>
+        <h1 id="titulo-principal">Infografía BJGL</h1>
+        <h2 id="Fecha-Info">Enero 2025</h2>
+    </header>   
+
+    <section>
+        <h2 id="subtitulos">Técnicos Nivel Nacional</h2>
+    </section>
+
+    <section>
+        <div class="contenedor-parrafos">
+            <!-- Párrafo 1 con imagen -->
+            <div class="parrafo-izquierda">
+                <p class="parrafos-bjgl">Representa el valor de los técnicos a nivel nacional en relación a la cobertura de usuarios 
+                    por distrito de Enero 2025.</p>
+                <h3>Técnicos Distritales</h3>
+                <p>55</p>
+                <h3>Analistas Zonales</h3>
+                <p>9</p>            
+            </div>
+        
+            <!-- Párrafo 2 con imagen -->
+            <div class="parrafo-izquierda">
+                <!--<h2>Comparación de Ventas Mensuales</h2> -->
+                <canvas id="GraficoTecnicos"></canvas>
+        
+                <script>
+                    // Selección del canvas
+                    var ctx = document.getElementById('GraficoTecnicos').getContext('2d');
+                    
+                    // Crear el gráfico con múltiples datasets
+                    var miGraficoMultiple = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [''],
+                            datasets: [
+                                {
+                                    label: 'Técnicos Distritales',
+                                    data: [55],
+                                    backgroundColor: '#08377c',  // Verde con transparencia al 70%
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Analistas Zonales',
+                                    data: [9],
+                                    backgroundColor: '#41b8d5',  // Azul oscuro sólido 
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        
+            <!-- Párrafo 3 con imagen -->
+            <div class="parrafo-derecha">
+                <h3 class="titulo-parrafos">Nota Aclaratoria</h3>
+                <p class="parrafos-bjgl">El número de técnicos necesarios para el Bono Joaquín Gallegos Lara es:</p>
+                <h3>Técnicos Necesarios: </h3>
+                <p>9</p>  
+            </div>
+        </div>
+        
+    </section>
+
+    <section>
+        <h2 id="subtitulos">Técnicos Nivel Nacional</h2>
+    </section>
+
+    <section class="contenedor">
+        <!-- Párrafo 1 con imagen -->
+        <div class="parrafo-izquierda">
+            <h2>Casos Atendidos por Mes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Casos Atendidos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Enero</td><td>252</td></tr>
+                    <tr><td>Febrero</td><td>170</td></tr>
+                    <tr><td>Marzo</td><td>233</td></tr>
+                    <tr><td>Abril</td><td>460</td></tr>
+                    <tr><td>Mayo</td><td>184</td></tr>
+                    <tr><td>Junio</td><td>314</td></tr>
+                    <tr><td>Julio</td><td>349</td></tr>
+                    <tr><td>Agosto</td><td>279</td></tr>
+                    <tr><td>Septiembre</td><td>201</td></tr>
+                    <tr><td>Octubre</td><td>147</td></tr>
+                    <tr><td>Noviembre</td><td>193</td></tr>
+                    <tr>
+                        <th>TOTAL</th>
+                        <th>2,782</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="parrafo-derecha ">
+            <h2>Casos atendidos por institución corte Enero</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ORIGEN</th>
+                        <th>PROCEDENCIA</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PLATAFORMA QUIPUX</td><td>Presidencia</td><td>155c</td></tr>
+                    <tr><td></td><td>CONADIS</td><td>c</td></tr>
+                    <tr><td></td><td>MIES</td><td>c</td></tr>
+                    <tr><td></td><td>Ciudadanos</td><td>c</td></tr>
+                    <tr><td></td><td>MSP</td><td>c1</td></tr>
+                    <tr><td></td><td>Defensoria del Pueblo</td><td>c38</td></tr>
+                    <tr><td></td><td>Otros</td><td>c29</td></tr>
+                    <tr><td>PLATAFORMA GOB.EC</td><td>Plataforma GOB.EC</td><td>279</td></tr>
+                    <tr><td>PLATAFORMA ZIMBRA</td><td>Casos asignados por Zimbra</td><td>c1.855</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2 id="subtitulos">Sustitutos Directos</h2>
+    </section>
+
+    <section>
+        <div class="contenedor-parrafos">
+            <!-- Párrafo 1 con imagen -->
+            <div class="parrafo-izquierdaS">
+                <h3>Según el Art. 48 de la Ley Orgánica de Discapacidades</h3>
+                <p>Las y los parientes hasta cuarto grado de consanguinidad y segundo de afinidad, cónyuge, pareja en unión de hecho, 
+                    representante legal o las personas que tengan bajo su responsabilidad y/o cuidado a una persona con discapacidad 
+                    severa, se considerarán como sustitutos a los padres de las niñas, niños o adolescentes con discapacidad o a sus 
+                    representantes legales.</p>
+                <p>De existir otros casos de solidaridad humana, la autoridad nacional encargada de la inclusión económica y social 
+                    validará al sustituto, de conformidad al reglamento.</p>
+                <h3>Número de sustitutos Directos con corte a septiembre</h3>
+                <p>55</p>
+                <h3>Número de sustitutos Por Solidaridad Humana con corte a noviembre</h3>
+                <p>9</p>            
+            </div>
+        
+            <!-- Párrafo 2 con imagen -->
+            <div class="parrafo-derechaS">
+                <h2>Casos atendidos por institución corte Enero</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ZONA / DISTRITO</th>
+                            <th>NRO. VISITAS</th>
+                            <th>EFECTIVAS</th>
+                            <th>VISITAS NO EFECTIVAS</th>
+                            <th>TOTAL VISITAS</th>
+                            <th>AVANCE EN %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ZONA 1</td><td>385</td><td>155c</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 2</td><td>385</td><td>385</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 3</td><td>385</td><td>c</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 4</td><td>385</td><td>c</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 5</td><td>385</td><td>c1</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 6</td><td>385</td><td>c38</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 7</td><td>385</td><td>c29</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 8</td><td>385</td><td>279</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                        <tr>
+                            <td>ZONA 9</td><td>385</td><td>c1.855</td><td>155c</td><td>155c</td><td>155c</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </section>
+    
+    <section>
+        <h2 id="subtitulos">Vehículos Enero 2025</h2>
+    </section>
+
+    <section>
+        <div class="custom-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th colspan="5" class="zona1-header">ZONA 1</th>
+                        <th colspan="3" class="zona1-header">ZONA 2</th>
+                        <th colspan="4" class="zona1-header">ZONA 3</th>
+                        <th colspan="5" class="zona1-header">ZONA 4</th>
+                        <th colspan="7" class="zona1-header">ZONA 5</th>
+                        <th colspan="4" class="zona1-header">ZONA 6</th>
+                        <th colspan="5" class="zona1-header">ZONA 7</th>
+                        <th colspan="3" class="zona1-header">ZONA 8</th>
+                        <th colspan="3" class="zona1-header">ZONA 9</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DIRECCION DISTRITAL</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">NO</td>
+                    </tr>
+                    <tr>
+                        <td>DIRECCION DISTRITAL</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">SI</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">NO</td>
+                        <td class="zona zona1">NO</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </body>
 </html>

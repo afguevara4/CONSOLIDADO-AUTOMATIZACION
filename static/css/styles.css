@@ -1,47 +1,253 @@
-/* Estilos personalizados para el modal */
-#errorModal .modal-content {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-radius: 10px;
-    border: 1px solid #f5c6cb;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Evita desbordamientos al considerar padding y border en el tamaño total */
 }
 
-#errorModal .modal-header {
-    border-bottom: 1px solid #f5c6cb;
-    background-color: #f5c6cb;
+html, body {
+    height: 100%;
+    width: 100%;
 }
 
-#errorModal .modal-title {
-    font-size: 1.25rem;
-    font-weight: bold;
+section{
+    padding: 0;
 }
 
-#errorModal .modal-body {
-    font-size: 1rem;
-    padding: 20px;
+header {
+    background: rgba(0, 64, 133, 0.22); /* Color #004085 con 22% de transparencia */
+    color: #08377c;
+    padding: 0 150px;
     text-align: center;
+    position: relative; /* Para que el posicionamiento absoluto sea relativo al header */
 }
 
-#errorModal .modal-footer {
+#titulo-principal {
+    font-size: 95px;       
+    color: rgba(255, 255, 255, 0.78);  
+    text-align: center;    
+    font-weight: bold;      
+    margin-bottom: 0;
+    position: relative; /* Base del posicionamiento del h2 */
+}
+
+#Fecha-Info {
+    font-size: 48px;        
+    color: rgba(255, 255, 255, 0.78);  
+    position: relative; 
+    top: 0;               /* Lo posiciona en la parte superior */
+    left: 0;              /* Lo alinea al inicio del h1 */
+    font-weight: bold;      
+    margin: 0;         
+}
+
+#subtitulos{
+    font-size: 20px;       
+    color: rgb(255, 255, 255);
+    text-align: center;    
+    font-weight: bold;      
+    background: #08377c;
+    margin-bottom: 0;
+    position: relative;
+    outline: none; /* Desactiva el borde amarillo */
+}
+
+/* Estilo general */
+.contenedor {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.subtitulo-parrafos{
+    color: #08377c;
+}
+
+.titulo-parrafos{
+    font-weight: bold;     /* Aplica negrita */
+}
+
+.parrafos-bjgl{
+    text-align: justify;
     justify-content: center;
 }
 
-#errorModal .btn-close {
-    background-color: transparent;
-    border: none;
-    font-size: 1.25rem;
+/* Estilo de los párrafos */
+.parrafo-izquierda, .parrafo-derecha {
+    width: 45%; 
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
 }
 
-#errorModal .btn-danger {
-    background-color: #dc3545;
-    color: white;
+/* Estilo de las imágenes */
+.parrafo-izquierda img, 
+.parrafo-derecha img {
+    max-width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
+    .contenedor {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .parrafo-izquierda, .parrafo-derecha {
+        width: 100%;
+    }
+}
+
+/*TOTAL USUARIOS*/
+.contenedor-imagen-texto {
+    display: flex; /* Alinea los elementos en una fila */
+    align-items: center; /* Alinea los elementos verticalmente */
+}
+
+.contenedor-imagen-texto img {
+    margin-right: 20px; /* Espacio entre la imagen y el texto */
+}
+
+.subtitulo-parrafos {
+    color: #08377c;        /* Color azul oscuro */
+    font-weight: bold;     /* Aplica negrita */
+}
+
+/*tecnicos zonales*/
+.contenedor-parrafos {
+    display: flex; /* Aplica un diseño flexible para alinear los elementos en filas */
+    justify-content: space-between; /* Espacio entre las columnas */
+    gap: 20px; /* Espacio entre las columnas */
+}
+
+.parrafo-izquierda, .parrafo-derecha {
+    flex: 1; /* Hace que cada sección ocupe un 33.33% del contenedor */
+    padding: 20px; /* Espaciado interior */
+}
+
+.titulo-parrafos {
     font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    color: #08377c; /* Color del título */
 }
 
-#errorModal .btn-danger:hover {
-    background-color: #c82333;
+.parrafos-bjgl {
+    font-size: 16px; /* Tamaño del texto */
+    color: #333; /* Color del texto */
 }
+/*SUSTITUTOS DIRECTOS*/
+.contenedor-parrafos {
+    display: flex; /* Usa flexbox para organizar los elementos en fila */
+    justify-content: space-between; /* Separa los elementos a la izquierda y derecha */
+    gap: 20px; /* Espacio entre los dos párrafos */
+}
+
+.parrafo-izquierdaS {
+    flex: 1; /* Ocupa la mitad del contenedor */
+    padding: 20px;
+    background-color: #f4f4f4; /* Fondo opcional */
+    border-radius: 5px; /* Bordes redondeados opcionales */
+}
+
+.parrafo-derechaS {
+    flex: 1; /* Ocupa la mitad del contenedor */
+    padding: 20px;
+    background-color: #f4f4f4; /* Fondo opcional */
+    border-radius: 5px; /* Bordes redondeados opcionales */
+}
+
+h3, h2 {
+    color: #08377c; /* Color para los títulos */
+    font-weight: bold;
+}
+
+p {
+    font-size: 16px; /* Tamaño de texto */
+    color: #333; /* Color del texto */
+}
+
+table {
+    width: 100%; /* Asegura que la tabla ocupe todo el espacio */
+    border-collapse: collapse; /* Para que las celdas no tengan espacio entre ellas */
+}
+
+th, td {
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid #ddd; /* Bordes suaves para la tabla */
+}
+
+th {
+    background-color: #08377c;
+    color: rgb(0, 0, 0);
+}
+
+/*vehiculos*/
+/*.custom-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th, .custom-table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.custom-table th {
+    font-weight: bold;
+}
+
+/* Rotar el texto dentro de las celdas */
+.custom-table th, .custom-table td {
+    writing-mode: vertical-rl; /* Cambia la dirección del texto */
+    transform: rotate(180deg); /* Rota el texto para que quede en la orientación deseada */
+}
+
+/* Estilo aplicado solo a la tabla con la clase custom-table */
+.custom-table {
+    border: 2px solid black;
+    padding: 10px;
+    margin: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Estilo de la tabla */
+.custom-table table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Estilo para celdas y encabezados */
+.custom-table th, 
+.custom-table td {
+    border: 1px solid black;
+    text-align: center;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+/* Encabezados con líneas divisorias dentro de las zonas */
+.custom-table .zona1-header {
+    font-weight: bold;
+    background-color: #f2f2f2;
+    border: 1px solid black; /* Línea divisoria en cada celda */
+}
+
+.custom-table .zona {
+    text-align: center;
+}
+
+
+
+
+
