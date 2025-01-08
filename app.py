@@ -108,6 +108,9 @@ def generate_excel():
             # Escribir tabla 1 (con la nueva columna) y título
             df_memorandos = pd.DataFrame(session['all_memorandos'])
 
+             # Ordenar el DataFrame por la columna "COORDINACIÓN ZONAL" (de menor a mayor)
+            df_memorandos = df_memorandos.sort_values(by="COORDINACIÓN ZONAL", ascending=True)
+
             # Obtener el total general para la nueva columna
             total_usuarios_aprobados = df_memorandos["TOTAL USUARIOS APROBADOS POR UNIDAD DESCONCENTRADA"].sum()
             
