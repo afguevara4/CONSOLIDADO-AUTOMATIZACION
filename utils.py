@@ -4,7 +4,39 @@ import re
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import locale
+from datetime import datetime, timedelta
 
+# Diccionario de meses en inglés a español
+months_in_spanish = {
+    'January': 'Enero',
+    'February': 'Febrero',
+    'March': 'Marzo',
+    'April': 'Abril',
+    'May': 'Mayo',
+    'June': 'Junio',
+    'July': 'Julio',
+    'August': 'Agosto',
+    'September': 'Septiembre',
+    'October': 'Octubre',
+    'November': 'Noviembre',
+    'December': 'Diciembre'
+}
+
+# Obtener la fecha actual
+current_date = datetime.now()
+
+# Calcular el primer día del próximo mes
+next_month = current_date.replace(day=28) + timedelta(days=4)  # Esto siempre nos da un día en el siguiente mes
+next_month = next_month.replace(day=1)  # Ajustamos al primer día del próximo mes
+
+# Obtener el nombre del mes siguiente en inglés
+next_month_name_english = next_month.strftime("%B")
+
+# Traducir el nombre del mes al español
+next_month_nameE = months_in_spanish.get(next_month_name_english, next_month_name_english).upper()  # Se obtiene el mes en español
+
+# Obtener el año del siguiente mes
+next_yearE = next_month.year
 
 # Función para extraer datos desde el archivo PDF
 def extract_data_from_pdf(pdf_path):
@@ -79,6 +111,18 @@ def get_next_month_year():
     month_name = next_month.strftime('%B').upper()
     year = next_month.year
     return month_name, year
+
+# Función para calcular el mes y año siguiente, traducido al español
+def get_next_month_year():
+    current_date = datetime.now()
+    next_month = current_date + relativedelta(months=1)
+    # Obtener el nombre del mes en inglés
+    month_name_english = next_month.strftime('%B')
+    # Traducir el nombre del mes al español
+    month_name = months_in_spanish.get(month_name_english, month_name_english).upper()
+    year = next_month.year
+    return month_name, year
+
 
 # Función para extraer memorando y fecha
 def extract_memorando(text):

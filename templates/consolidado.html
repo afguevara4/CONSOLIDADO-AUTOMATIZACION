@@ -3,63 +3,39 @@
 {% block title %}Bienvenido - PDF a Excel{% endblock %}
 
 {% block content %}
-    <h1 class="text-center mb-4">Convertir PDF a Excel</h1>
+    <h1 class="text-center mb-4">Matriz de aprobación del pago del Bono JGL</h1>
 
     <!-- Formulario de carga de archivos -->
     <form action="/consolidado" method="post" enctype="multipart/form-data" class="border p-4 rounded shadow-sm bg-light">
         <div class="mb-3">
-            <label for="pdf_files" class="form-label">Selecciona archivos PDF:</label>
+            <label for="pdf_files" class="form-label">Seleccione el Pdf</label>
             <input type="file" class="form-control" id="pdf_files" name="pdf_files" multiple required>
         </div>
         <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Procesar Archivos</button>
+            <button type="submit" class="btn btn-primary">Procesar Archivo</button>
         </div>
     </form>
 
-    <!-- Mostrar los resultados después del procesamiento -->
-    {% if memorandos %}
-        <h3 class="mt-5">Resumen de Datos Procesados</h3>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Coordinación Zonal</th>
-                    <th>Nro. Memorando</th>
-                    <th>Fecha Envío Memorando</th>
-                    <th>Total Usuarios Aprobados</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for memorando in memorandos %}
-                    <tr>
-                        <td>{{ memorando['COORDINACIÓN ZONAL'] }}</td>
-                        <td>{{ memorando['NRO. MEMORANDO'] }}</td>
-                        <td>{{ memorando['FECHA ENVÍO MEMORANDO'] }}</td>
-                        <td>{{ memorando['TOTAL USUARIOS APROBADOS POR UNIDAD DESCONCENTRADA'] }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Mostrar los archivos cargados -->
+    {% if uploaded_files %}
+        <h3 class="mt-3">Archivos cargados:</h3>
+        <ul>
+            {% for file in uploaded_files %}
+                <li>{{ file }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
-        <h3>Resumen por Zona</h3>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Zona</th>
-                    <th>Total de Activos</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for zona, total in zona_totals.items() %}
-                    <tr>
-                        <td>{{ zona }}</td>
-                        <td>{{ total }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="text-center mt-4">
-            <a href="{{ url_for('download_excel') }}" class="btn btn-success">Descargar Excel</a>
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
         </div>
     {% endif %}
+
+    {% if message %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+
 {% endblock %}

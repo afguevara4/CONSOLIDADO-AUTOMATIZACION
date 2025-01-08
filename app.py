@@ -4,6 +4,7 @@ import pandas as pd
 import hashlib
 from werkzeug.utils import secure_filename
 from utils import extract_data_from_pdf, get_next_month_year, determine_zone
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '/tmp/uploads'
@@ -12,6 +13,14 @@ app.config['PROCESSED_FOLDER'] = '/tmp/processed'
 app.secret_key = 'supersecretkey'  # Necesario para el uso de session
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
+
+from utils import next_month_nameE, next_yearE
+
+# Crear el nombre del archivo con el mes y año calculado
+excel_filename = f"CONSOLIDADO {next_month_nameE}-{next_yearE}.xlsx"
+
+# Combina la ruta de la carpeta de archivos procesados con el nombre del archivo
+excel_path = os.path.join(app.config['PROCESSED_FOLDER'], excel_filename)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -84,10 +93,11 @@ def consolidado():
         if session['uploaded_files'] >= 9:
             return generate_excel()
         else:
-            return render_template("consolidado.html", message=f"PDF cargado exitosamente. PDFs cargados: {session['uploaded_files']}/9")    
-    
+            return render_template("consolidado.html", message=f"PDF cargado exitosamente. PDFs cargados: {session['uploaded_files']}/9", 
+            uploaded_files=session.get('uploaded_files_list', []))
+        
     # Agregar un retorno por si se accede a la ruta con un método GET
-    return render_template("consolidado.html")
+    return render_template("consolidado.html", uploaded_files=session.get('uploaded_files_list', []))
 
 def generate_excel():
     zona_totals = {zona: sum(activos) for zona, activos in session['activos_por_zona_global'].items()}
@@ -103,7 +113,6 @@ def generate_excel():
     table2_title = "RESUMEN"
 
     if session['all_memorandos']:
-        excel_path = os.path.join(app.config['PROCESSED_FOLDER'], "resultados.xlsx")
         with pd.ExcelWriter(excel_path, engine="xlsxwriter") as writer:
             # Escribir tabla 1 (con la nueva columna) y título
             df_memorandos = pd.DataFrame(session['all_memorandos'])
