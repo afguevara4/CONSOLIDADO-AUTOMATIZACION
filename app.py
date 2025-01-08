@@ -1,6 +1,7 @@
-from flask import Flask, request, render_template, send_file, session
+from flask import Flask, request, render_template, send_file, session, redirect, url_for
 import os
 import pandas as pd
+import hashlib
 from werkzeug.utils import secure_filename
 from utils import extract_data_from_pdf, get_next_month_year, determine_zone
 
@@ -15,12 +16,22 @@ os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
+def generate_file_hash(filepath):
+    """Genera un hash SHA256 para el archivo dado."""
+    hash_sha256 = hashlib.sha256()
+    with open(filepath, 'rb') as f:
+        while chunk := f.read(4096):
+            hash_sha256.update(chunk)
+    return hash_sha256.hexdigest()
+
 @app.route("/", methods=["GET"])
 def index():
     session.clear()
     session['all_memorandos'] = []
     session['activos_por_zona_global'] = {f"Zona{i}": [] for i in range(1, 10)}
     session['uploaded_files'] = 0
+    session['uploaded_files_list'] = []  # Para almacenar los nombres de los archivos cargados
+    session['uploaded_file_hashes'] = []  # Para almacenar los hashes de los archivos cargados
     return render_template("index.html")
 
 @app.route("/consolidado", methods=["GET", "POST"])
@@ -36,8 +47,21 @@ def consolidado():
             if not filename.lower().endswith('.pdf'):
                 return render_template("consolidado.html", error_message="Solo se permiten archivos PDF.")
             
+            #Verificar si el archivo ya ha sido cargado previamente por nombre
+            if filename in session.get('uploaded_files_list', []):
+                return render_template("consolidado.html", error_message=f"El archivo '{filename}' ya ha sido cargado previamente.")
+
+            # Verificar si el archivo ya ha sido cargado por hash
             pdf_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(pdf_path)
+
+            file_hash = generate_file_hash(pdf_path)
+            if file_hash in session.get('uploaded_file_hashes', []):
+                return render_template("consolidado.html", error_message=f"El archivo '{filename}' ya ha sido cargado previamente.")
+
+            # Guardar el nombre del archivo y su hash en la sesión
+            session['uploaded_files_list'].append(filename)
+            session['uploaded_file_hashes'].append(file_hash)
 
             # Validar si el archivo PDF se puede procesar
             try:
@@ -162,7 +186,13 @@ def generate_excel():
             worksheet.set_column(0, num_cols_memorandos - 1, 20, cell_format)  # Ajustar la columna 0 hasta la última columna de la Tabla 1
             worksheet.set_column(startcol_activos, startcol_activos + num_cols_activos - 1, 20, cell_format)  # Ajustar la columna 0 hasta la última columna de la Tabla 2
 
+    # Reiniciar la sesión para una nueva carga
     session.clear()
+    session['uploaded_files'] = 0
+    session['uploaded_files_list'] = []
+    session['uploaded_file_hashes'] = []
+    session['all_memorandos'] = []
+    session['activos_por_zona_global'] = {f"Zona{i}": [] for i in range(1, 10)} 
     return send_file(excel_path, as_attachment=True)
 
 @app.route("/documentacion")
