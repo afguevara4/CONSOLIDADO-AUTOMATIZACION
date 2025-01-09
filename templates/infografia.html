@@ -1,75 +1,201 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infografía Diciembre 2024</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-        section {
-            padding: 15px;
-            margin: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background: #f9f9f9;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-        }
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        table th {
-            background: #f4f4f4;
-            font-weight: bold;
-        }
+{% extends "base.html" %}
 
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            padding: 50px;
-        }
+{% block title %}Bienvenido - PDF a Excel{% endblock %}
 
-        h1 {
-            color: #333;
-        }
+{% block content %}
 
-        .image-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-        }
-
-        .person-icon {
-            font-size: 50px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .person-icon:hover {
-            transform: scale(1.1);
-        }
-    </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<body>    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="static/css/styles.css">
 
-</head>
-<body>
+    <section>
+        <!-- Selectores para mes y año -->
+        <label for="mes">Seleccionar Mes:</label>
+        <select id="mes">
+            <option value="Enero">Enero</option>
+            <option value="Febrero">Febrero</option>
+            <option value="Marzo">Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo">Mayo</option>
+            <option value="Junio">Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Septiembre">Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre">Noviembre</option>
+            <option value="Diciembre">Diciembre</option>
+        </select>
+
+        <label for="anio">Seleccionar Año:</label>
+        <select id="anio">
+            <script>
+                // Generar años dinámicamente
+                const anioSelect = document.getElementById('anio');
+                const currentYear = new Date().getFullYear();
+                for (let year = currentYear; year <= currentYear + 10; year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    anioSelect.appendChild(option);
+                }
+            </script>
+        </select>
+        <button onclick="actualizarFecha()">Actualizar Fecha</button>
+
+        <script>
+            function actualizarFecha() {
+                const mesSeleccionado = document.getElementById("mes").value;
+                const anioSeleccionado = document.getElementById("anio").value;
+                document.getElementById("Fecha-Info").textContent = `${mesSeleccionado} ${anioSeleccionado}`;
+            }
+        </script>
+    </section>
+    
+    <section>
+        <!-- Selectores para cambiar el monto y mes -->
+        <label for="nuevoMonto">Nuevo Monto:</label>
+        <input type="number" id="nuevoMonto" placeholder="Ingrese el nuevo monto">
+        <br>
+        <label for="mesMonto">Seleccionar Mes:</label>
+        <select id="mesMonto">
+            <option value="Enero">Enero</option>
+            <option value="Febrero">Febrero</option>
+            <option value="Marzo">Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo">Mayo</option>
+            <option value="Junio">Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Septiembre">Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre">Noviembre</option>
+            <option value="Diciembre">Diciembre</option>
+        </select>
+        <button onclick="actualizarMontoYMes()">Actualizar Información</button>
+
+        <script>
+            function actualizarMontoYMes() {
+                const nuevoMonto = document.getElementById("nuevoMonto").value;
+                const nuevoMes = document.getElementById("mesMonto").value;
+
+                if (nuevoMonto) {
+                    // Formatear el monto con separadores de miles y dos decimales
+                    const montoFormateado = new Intl.NumberFormat('es-EC', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2
+                    }).format(nuevoMonto);
+
+                    document.getElementById("monto-enviado").textContent = montoFormateado;
+                }
+
+                // Actualizar el mes en el párrafo
+                document.getElementById("mes-pago").textContent = nuevoMes;
+            }
+        </script>
+    </section>
+
+    <section>
+        <!-- Selectores para cambiar los datos -->
+        <label for="inputUsuarios">Cantidad de Usuarios:</label>
+        <input type="number" id="inputUsuarios" placeholder="Ingrese la cantidad de usuarios">
+        <br>
+        <label for="inputMes">Seleccionar Mes:</label>
+        <select id="inputMes">
+            <option value="Enero">Enero</option>
+            <option value="Febrero">Febrero</option>
+            <option value="Marzo">Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo">Mayo</option>
+            <option value="Junio">Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Septiembre">Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre">Noviembre</option>
+            <option value="Diciembre">Diciembre</option>
+        </select>
+        <br>
+        <label for="inputAnio">Seleccionar Año:</label>
+        <select id="inputAnio"></select>
+        <br>
+        <button onclick="actualizarDatos()">Actualizar Información</button>
+
+        <script>
+            // Llenar el selector de años dinámicamente
+            const selectAnio = document.getElementById('inputAnio');
+            const anioActual = new Date().getFullYear();
+            for (let anio = anioActual; anio <= anioActual + 10; anio++) {
+                const opcion = document.createElement('option');
+                opcion.value = anio;
+                opcion.textContent = anio;
+                selectAnio.appendChild(opcion);
+            }
+        
+            // Función para actualizar los datos
+            function actualizarDatos() {
+                const cantidadUsuarios = document.getElementById("inputUsuarios").value;
+                const mesSeleccionado = document.getElementById("inputMes").value;
+                const anioSeleccionado = document.getElementById("inputAnio").value;
+        
+                // Formatear la cantidad de usuarios con separadores de miles
+                if (cantidadUsuarios) {
+                    const formatoMiles = new Intl.NumberFormat('es-EC').format(cantidadUsuarios);
+                    document.getElementById("textoUsuarios").textContent = formatoMiles;
+                }
+        
+                // Actualizar mes y año en el texto
+                document.getElementById("textoMes").textContent = mesSeleccionado;
+                document.getElementById("textoAnio").textContent = anioSeleccionado;
+            }
+        </script>
+    </section>
+
+    <section>
+        <!-- Selectores para cambiar los datos -->
+        <label for="inputCatastrofica">Usuarios Catastrófica:</label>
+        <input type="number" id="inputCatastrofica" placeholder="Ingrese cantidad"><br>
+
+        <label for="inputDiscapacidad">Usuarios Discapacidad:</label>
+        <input type="number" id="inputDiscapacidad" placeholder="Ingrese cantidad"><br>
+
+        <label for="inputVIH">Usuarios VIH:</label>
+        <input type="number" id="inputVIH" placeholder="Ingrese cantidad"><br>
+
+        <button onclick="actualizarLista()">Actualizar Cantidades</button>
+
+        <script>
+            function actualizarLista() {
+                const cantidadCatastrofica = document.getElementById("inputCatastrofica").value;
+                const cantidadDiscapacidad = document.getElementById("inputDiscapacidad").value;
+                const cantidadVIH = document.getElementById("inputVIH").value;
+        
+                // Formatear cantidades con separadores de miles
+                const formatoMiles = new Intl.NumberFormat('es-EC').format;
+        
+                if (cantidadCatastrofica) {
+                    document.getElementById("textoCatastrofica").textContent = `${formatoMiles(cantidadCatastrofica)}`;
+                }
+                if (cantidadDiscapacidad) {
+                    document.getElementById("textoDiscapacidad").textContent = `${formatoMiles(cantidadDiscapacidad)}`;
+                }
+                if (cantidadVIH) {
+                    document.getElementById("textoVIH").textContent = `${formatoMiles(cantidadVIH)}`;
+                }
+        
+                // Calcular el total sumando todas las cantidades
+                const totalUsuarios = 
+                    (parseInt(cantidadCatastrofica) || 0) + 
+                    (parseInt(cantidadDiscapacidad) || 0) + 
+                    (parseInt(cantidadVIH) || 0);
+        
+                document.getElementById("textoTotalUsuarios").textContent = `${formatoMiles(totalUsuarios)}`;
+            }
+        </script>
+    </section>
+
+
     <header>
         <h1 id="titulo-principal">Infografía DPCPD</h1>
         <h2 id="Fecha-Info">Enero 2025</h2>
@@ -83,17 +209,21 @@
         <!-- Párrafo 1 con imagen -->
         <div class="parrafo-izquierda">
             <img src="static/images/monto.png" alt="Imagen Párrafo 1">
-            <h2 class="subtitulo-parrafos" >$2'00000</h2>
+            <h2 class="subtitulo-parrafos" id="monto-enviado">$2'00000</h2>
             <h3 class="titulo-parrafos" >Monto enviado a Pagar</h3>
-            <p class="parrafos-bjgl" >El monto total enviado al pago correspondiente al número de usuarios que cumplen con criterios para pago del mes de Enero.</p>
+            <p class="parrafos-bjgl" id="descripcion-pago">El monto total enviado al pago correspondiente al número de usuarios que 
+                cumplen con criterios para pago del mes de <span id="mes-pago"></span>.</p>
         </div>
     
-        <!-- Párrafo 2 con imagen -->
+        <!-- Sección que se actualizará -->
         <div class="parrafo-derecha">
             <img src="static/images/total.png" alt="Imagen Párrafo 2">
-            <h2 class="subtitulo-parrafos" >45.485</h2>
-            <h3 class="titulo-parrafos" >Total usuarios</h3>
-            <p class="parrafos-bjgl">Es el número total de usuarios en nómina del BJGL correspondiente a Enero 2025.</p>
+            <h2 class="subtitulo-parrafos" id="textoUsuarios">45.485</h2>
+            <h3 class="titulo-parrafos">Total de Usuarios</h3>
+            <p class="parrafos-bjgl">
+                Es el número total de usuarios en nómina del BJGL correspondiente a 
+                <span id="textoMes">Enero</span> <span id="textoAnio">2025</span>.
+            </p>
         </div>
     </section>
     
@@ -102,22 +232,37 @@
     </section>
 
     <section class="contenedor" >
+        <!-- Sección con la lista a modificar -->
         <div class="parrafo-izquierda">
             <ul>
-                <li>Catastrófica</li>
-                <li>6.918c</li>
-                <li>Discapacidad</li>
-                <li>38.241c</li>
-                <li>VIH</li>
-                <li>326c</li>
-                <li>Total usuarios</li>
-                <li>45.485c</li>
-            </ul>
+                <li>Catastrófica <br> <span id="textoCatastrofica">6.918</span></li>
+                <li>Discapacidad <br> <span id="textoDiscapacidad">38.241</span></li>
+                <li>VIH <br> <span id="textoVIH">326</span></li>
+                <li>Total usuarios <br> <span id="textoTotalUsuarios">45.485</span></li>
+            </ul>            
         </div>
 
         <div class="parrafo-derecha">
             <!--<h2>Comparación de Ventas Mensuales</h2> -->
             <canvas id="miGraficoMultiple"></canvas>
+
+            <!-- Inputs para cambiar etiquetas y datos -->
+            <label for="inputLabels">Etiquetas (Z1, Z2, Z3,...):</label>
+            <input type="text" id="inputLabels" value="Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9"><br>
+
+            <label for="inputCatas">Datos CATAS:</label>
+            <input type="text" id="inputCatas" value="511,152,340,1125,1914,202,627,1500,547"><br>
+
+            <label for="inputDisca">Datos DISCA:</label>
+            <input type="text" id="inputDisca" value="3800,1364,3275,7227,7640,2568,4875,4283,3709"><br>
+
+            <label for="inputVHI">Datos VHI:</label>
+            <input type="text" id="inputVHI" value="35,12,11,40,121,4,19,72,12"><br>
+
+            <button onclick="actualizarGrafico()">Actualizar Gráfico</button>
+
+            <!-- Canvas para el gráfico -->
+            <canvas id="miGraficoMultiple" width="400" height="200"></canvas>
 
             <script>
                 // Selección del canvas
@@ -131,20 +276,20 @@
                         datasets: [
                             {
                                 label: 'CATAS',
-                                data: [511,152,340,1125,1914,202,627,1500,547],
+                                data: [511, 152, 340, 1125, 1914, 202, 627, 1500, 547],
                                 backgroundColor: '#617c08',  // Verde con transparencia al 70%
                                 borderWidth: 1
                             },
                             {
                                 label: 'DISCA',
-                                data: [3800,1364,3275,7227,7640,2568,4875,4283,3709],
+                                data: [3800, 1364, 3275, 7227, 7640, 2568, 4875, 4283, 3709],
                                 backgroundColor: '#08377c',  // Azul oscuro sólido 
                                 borderColor: '#08377c', 
                                 borderWidth: 1
                             },
                             {
                                 label: 'VHI',
-                                data: [35,12,11,40,121,4,19,72,12],
+                                data: [35, 12, 11, 40, 121, 4, 19, 72, 12],
                                 backgroundColor: '#c099ff',  // Verde con transparencia al 70%
                                 borderColor: '#c099ff',
                                 borderWidth: 1
@@ -160,6 +305,24 @@
                         }
                     }
                 });
+
+                // Función para actualizar el gráfico
+                function actualizarGrafico() {
+                    // Obtener las nuevas etiquetas y datos desde los inputs
+                    const inputLabels = document.getElementById("inputLabels").value.split(',');
+                    const inputCatas = document.getElementById("inputCatas").value.split(',').map(Number);
+                    const inputDisca = document.getElementById("inputDisca").value.split(',').map(Number);
+                    const inputVHI = document.getElementById("inputVHI").value.split(',').map(Number);
+
+                    // Actualizar los datos del gráfico
+                    miGraficoMultiple.data.labels = inputLabels;
+                    miGraficoMultiple.data.datasets[0].data = inputCatas;
+                    miGraficoMultiple.data.datasets[1].data = inputDisca;
+                    miGraficoMultiple.data.datasets[2].data = inputVHI;
+
+                    // Actualizar el gráfico
+                    miGraficoMultiple.update();
+                }
             </script>
         </div>
         
@@ -718,5 +881,5 @@
             </table>
         </div>
     </section>
-</body>
-</html>
+{% endblock %}
+
